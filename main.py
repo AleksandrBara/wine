@@ -3,6 +3,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import pandas
 from collections import defaultdict
+import argparse
 
 
 def get_correct_year_name(winery_age):
@@ -18,7 +19,7 @@ def get_correct_year_name(winery_age):
 
 def get_winery_age(year_of_create):
     now = datetime.datetime.now()
-    year_now =  now.year
+    year_now = now.year
     winery_age = year_now - year_of_create
     return winery_age
 
@@ -28,15 +29,22 @@ def get_wine_catalog(wine_data_file):
         wine_data_file,
         keep_default_na=False
     )
-    wines_dict =  wines.to_dict(orient='records')
+    wines_dict = wines.to_dict(orient='records')
     wine_catalog = defaultdict(list)
     for wine in wines_dict:
         wine_catalog[wine['Категория']].append(wine)
     return wine_catalog
 
 
+def get_cli_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("file_name")
+    file_name = parser.parse_args().file_name
+    return file_name
+
+
 if __name__ == '__main__':
-    wine_data_file = 'wine_data.xlsx'
+    wine_data_file = get_cli_args()
     year_of_create = 1920
     winery_age = get_winery_age(year_of_create)
     correct_year_name = get_correct_year_name(winery_age)
@@ -47,9 +55,9 @@ if __name__ == '__main__':
     )
     template = env.get_template('template.html')
     rendered_page = template.render(
-            wines_catalog=wines_catalog,
-            winery_age=winery_age,
-            correct_year_name=correct_year_name,
+        wines_catalog=wines_catalog,
+        winery_age=winery_age,
+        correct_year_name=correct_year_name,
     )
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
