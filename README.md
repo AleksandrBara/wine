@@ -12,7 +12,7 @@ pip install -r requirements.txt
 ```
 - Проверьте наличие файла wine_data.xlsx в корневом каталоге.
 - В файлу wine_data.xlsx должен быть заполнен параметр 'Картинка'.
-- Запустите код командой:   python3 main.py wine_data.xlsx
+- Запустите код командой:   python3 main.py /PATH/TO/file_name
 - Перейдите на сайт по адресу [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ## Цели проекта

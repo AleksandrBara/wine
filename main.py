@@ -24,9 +24,9 @@ def get_winery_age(year_of_create):
     return winery_age
 
 
-def get_wine_catalog(wine_data_file):
+def get_wine_catalog(wine_data_file_path):
     wines = pandas.read_excel(
-        wine_data_file,
+        wine_data_file_path,
         keep_default_na=False
     )
     wines_dict = wines.to_dict(orient='records')
@@ -38,17 +38,17 @@ def get_wine_catalog(wine_data_file):
 
 def get_cli_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("file_name")
-    file_name = parser.parse_args().file_name
-    return file_name
+    parser.add_argument("file_path")
+    file_path = parser.parse_args().file_path
+    return file_path
 
 
 if __name__ == '__main__':
-    wine_data_file = get_cli_args()
+    wine_data_file_path = get_cli_args()
     year_of_create = 1920
     winery_age = get_winery_age(year_of_create)
     correct_year_name = get_correct_year_name(winery_age)
-    wines_catalog = get_wine_catalog(wine_data_file)
+    wines_catalog = get_wine_catalog(wine_data_file_path)
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
