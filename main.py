@@ -29,9 +29,9 @@ def get_wine_catalog(wine_data_file_path):
         wine_data_file_path,
         keep_default_na=False
     )
-    wines_dict = wines.to_dict(orient='records')
+    wines_dictionary = wines.to_dict(orient='records')
     wine_catalog = defaultdict(list)
-    for wine in wines_dict:
+    for wine in wines_dictionary:
         wine_catalog[wine['Категория']].append(wine)
     return wine_catalog
 
