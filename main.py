@@ -28,10 +28,9 @@ def get_wine_catalog(wine_data_file_path):
     wines = pandas.read_excel(
         wine_data_file_path,
         keep_default_na=False
-    )
-    wines_dictionary = wines.to_dict(orient='records')
+    ).to_dict(orient='records')
     wine_catalog = defaultdict(list)
-    for wine in wines_dictionary:
+    for wine in wines:
         wine_catalog[wine['Категория']].append(wine)
     return wine_catalog
 
